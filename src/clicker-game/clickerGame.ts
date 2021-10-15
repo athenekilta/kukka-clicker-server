@@ -1,3 +1,5 @@
+import { Server } from "socket.io";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { UserModel } from "../models/user";
 import { logger } from "../utils/logger";
 
@@ -20,15 +22,21 @@ export interface IClickerGameState {
 }
 
 export class ClickerGame {
+  io: Server<DefaultEventsMap, DefaultEventsMap>;
   options: IClickerGameOptions;
   activeUsers: string[];
   terminated: boolean;
 
   constructor(options: IClickerGameOptions) {
+    this.io = null;
     this.options = options;
     this.activeUsers = [];
     this.terminated = false;
   }
+
+  bindSocketServer = (io: Server<DefaultEventsMap, DefaultEventsMap>) => {
+    this.io = io;
+  };
 
   /**
    * Updates
@@ -73,6 +81,11 @@ export class ClickerGame {
             },
             { where: { username } }
           );
+
+          // emit to user
+          if (this.io) {
+            this.io.to(username).emit("set_state", newState);
+          }
         } else {
           // maybe delete user from the loop?
         }

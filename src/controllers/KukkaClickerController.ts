@@ -20,6 +20,7 @@ export class KukkaClickerController {
   ) {
     this.io = io;
     this.game = game;
+    game.bindSocketServer(io);
     this.__init();
   }
 

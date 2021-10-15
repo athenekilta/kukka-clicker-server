@@ -55,9 +55,7 @@ export class AuthContorller {
       } catch (error) {
         logger({ error });
       }
-      res
-        .status(500)
-        .send({ message: "Internal server error" });
+      res.status(500).send({ message: "Internal server error" });
     });
 
     // LOGIN
@@ -171,16 +169,12 @@ export class AuthContorller {
             .status(201)
             .send({ user: user.toJSON(), message: "success" });
         } else {
-          res
-            .status(200)
-            .send({ user: null });
+          res.status(200).send({ user: null });
         }
       } catch (error) {
         logger({ error });
       }
-      res
-        .status(500)
-        .send({ message: "Internal server error" });
+      res.status(500).send({ message: "Internal server error" });
     });
   }
 }
