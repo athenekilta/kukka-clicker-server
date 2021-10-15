@@ -34,3 +34,5 @@ UserModel.init(
     sequelize, // passing the `sequelize` instance is required
   }
 );
+
+UserModel.sync();
