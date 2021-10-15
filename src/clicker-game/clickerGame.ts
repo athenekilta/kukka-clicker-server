@@ -63,6 +63,7 @@ export class ClickerGame {
         const user = await UserModel.findOne({ where: { username } });
         if (user) {
           const prevState: IClickerGameState = JSON.parse(user.state as string);
+          prevState.score = user.score; // ensure the right score
           const newState = game.calculate(prevState);
           await UserModel.update(
             {
