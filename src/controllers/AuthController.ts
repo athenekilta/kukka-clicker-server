@@ -94,7 +94,7 @@ export class AuthContorller {
         res.setHeader("Set-Cookie", cookie);
 
         return res
-          .status(201)
+          .status(200)
           .send({ user: user.toJSON(), message: "success" });
       } catch (error) {
         logger({ error });
