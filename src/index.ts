@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
+import { AuthContorller } from "./controllers/AuthController";
 import { KukkaClickerController } from "./controllers/KukkaClickerController";
 
 // Create a new express app instance
@@ -16,11 +17,14 @@ const io = new Server(server, {
 
 const PORT = process.env.PORT || 4000;
 
-app.get("/", function (req, res) {
+// middleware
+app.use(express.json({ limit: "100mb" }));
+
+app.get("/", (req, res) => {
   res.send("Kukka server");
 });
 
-// create new controller
+new AuthContorller(app);
 new KukkaClickerController(io);
 
 // start server
