@@ -1,9 +1,12 @@
 import { Model, DataTypes } from "sequelize";
+import { IClickerGameState } from "../clicker-game/clickerGame";
 import { sequelize } from "../utils/db";
 
 export class UserModel extends Model {
   public username: string;
   public password: string;
+  public score: number;
+  public state: string | IClickerGameState;
 }
 
 UserModel.init(
@@ -20,6 +23,10 @@ UserModel.init(
     score: {
       type: DataTypes.DOUBLE,
       defaultValue: 0,
+    },
+    state: {
+      type: DataTypes.STRING(100000),
+      defaultValue: '{ "score": 0, "upgrades": [] }',
     },
   },
   {

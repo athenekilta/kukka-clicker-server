@@ -14,7 +14,7 @@ export class KukkaClickerController {
   MESSAGE_EXPIRATION_SECONDS: number;
   constructor(io: Server<DefaultEventsMap, DefaultEventsMap>) {
     this.io = io;
-    // this.__init();
+    this.__init();
   }
 
   /**
