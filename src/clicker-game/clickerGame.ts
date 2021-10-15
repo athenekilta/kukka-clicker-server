@@ -2,6 +2,7 @@ import { Server } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { UserModel } from "../models/user";
 import { logger } from "../utils/logger";
+import { IClickerGameUpgradeDefinition, UPGRADES } from "./constants";
 
 export interface IClickerGameOptions {
   interval: number;
@@ -118,6 +119,49 @@ export class ClickerGame {
     try {
       const clickScore = 1;
       await UserModel.increment({ score: clickScore }, { where: { username } });
+    } catch (error) {
+      logger({ error });
+    }
+  };
+
+  /**
+   * Upgrades one of users upgrades
+   */
+  public upgrade = async (username: string, type: string) => {
+    try {
+      const user = await UserModel.findOne({ where: { username } });
+      const upgrade: IClickerGameUpgradeDefinition = UPGRADES[type];
+      if (user && upgrade) {
+        const newScore = user.score - upgrade.cost;
+        const state: IClickerGameState = JSON.parse(user.state as string);
+        const existingUpgrade = state.upgrades.find((up) => up.type === type);
+        // calculate the cost
+        let actualCost = upgrade.cost;
+        if (existingUpgrade) {
+          actualCost = upgrade.cost * Math.pow(2, existingUpgrade.level);
+        }
+        // if there is enough score?
+        if (user.score >= actualCost) {
+          if (existingUpgrade) {
+            existingUpgrade.level += 1;
+          } else {
+            const newUpgrade: IClickerUpgrade = {
+              type,
+              score: upgrade.score,
+              time_interval: upgrade.time_interval,
+              previous_time: 0,
+              level: 1,
+              ratio: upgrade.ratio,
+            };
+            state.upgrades.push(newUpgrade);
+          }
+          state.score = user.score; // ensure the right score
+          await UserModel.update(
+            { state: state, score: newScore },
+            { where: { username } }
+          );
+        }
+      }
     } catch (error) {
       logger({ error });
     }

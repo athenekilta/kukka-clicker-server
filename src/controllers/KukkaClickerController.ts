@@ -84,6 +84,10 @@ export class KukkaClickerController {
         socket.on("click", async () => {
           await controller.game.click(username);
         });
+
+        socket.on("upgrade", async ({ type }) => {
+          await controller.game.upgrade(username, type);
+        });
       }
 
       // CONNECTION
