@@ -21,8 +21,8 @@ export class AuthContorller {
         const userExists = await UserModel.findOne({ where: { username } });
         if (userExists) {
           return res
-            .send({ user: null, message: "username is taken" })
-            .status(400);
+            .status(400)
+            .send({ user: null, message: "username is taken" });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -50,12 +50,14 @@ export class AuthContorller {
         res.setHeader("Set-Cookie", cookie);
 
         return res
-          .send({ user: newUser.toJSON(), message: "success" })
-          .status(201);
+          .status(201)
+          .send({ user: newUser.toJSON(), message: "success" });
       } catch (error) {
         logger({ error });
       }
-      res.send({ message: "Internal server error" }).status(500);
+      res
+        .status(500)
+        .send({ message: "Internal server error" });
     });
 
     // LOGIN
@@ -67,15 +69,15 @@ export class AuthContorller {
         const user = await UserModel.findOne({ where: { username } });
         if (!user) {
           return res
-            .send({ user: null, message: "no user with that username" })
-            .status(400);
+            .status(400)
+            .send({ user: null, message: "no user with that username" });
         }
 
         const correctPassword = await bcrypt.compare(password, user.password);
         if (!correctPassword) {
           return res
-            .send({ user: null, message: "wrong password" })
-            .status(400);
+            .status(400)
+            .send({ user: null, message: "wrong password" });
         }
 
         const token = jwt.sign({ username }, config.ACCESS_TOKEN_SECRET_KEY, {
@@ -94,8 +96,8 @@ export class AuthContorller {
         res.setHeader("Set-Cookie", cookie);
 
         return res
-          .send({ user: user.toJSON(), message: "success" })
-          .status(201);
+          .status(201)
+          .send({ user: user.toJSON(), message: "success" });
       } catch (error) {
         logger({ error });
       }
@@ -166,15 +168,19 @@ export class AuthContorller {
 
           const user = await UserModel.findOne({ where: { username } });
           return res
-            .send({ user: user.toJSON(), message: "success" })
-            .status(201);
+            .status(201)
+            .send({ user: user.toJSON(), message: "success" });
         } else {
-          res.send({ user: null }).status(200);
+          res
+            .status(200)
+            .send({ user: null });
         }
       } catch (error) {
         logger({ error });
       }
-      res.send({ message: "Internal server error" }).status(500);
+      res
+        .status(500)
+        .send({ message: "Internal server error" });
     });
   }
 }
