@@ -1,4 +1,5 @@
 import { UserModel } from "../models/user";
+import { logger } from "../utils/logger";
 
 export interface IClickerGameOptions {
   interval: number;
@@ -32,7 +33,7 @@ export class ClickerGame {
   /**
    * Updates
    */
-  calculate = (state: IClickerGameState): IClickerGameState => {
+  private calculate = (state: IClickerGameState): IClickerGameState => {
     let score = state.score;
     return {
       score: Math.max(0, score), // over 0
@@ -88,17 +89,38 @@ export class ClickerGame {
     }
   };
 
+  public addUser = (username: string) => {
+    if (!this.activeUsers.includes(username)) {
+      this.activeUsers.push(username);
+    }
+  };
+
+  public deleteUser = (username: string) => {
+    if (this.activeUsers.includes(username)) {
+      this.activeUsers = this.activeUsers.filter((name) => name !== username);
+    }
+  };
+
+  public click = async (username: string) => {
+    try {
+      const clickScore = 1;
+      await UserModel.increment({ score: clickScore }, { where: { username } });
+    } catch (error) {
+      logger({ error });
+    }
+  };
+
   /**
    * Starts looping
    */
-  start = () => {
+  public start = () => {
     this.loop();
   };
 
   /**
    * Destroys the instance
    */
-  destroy = () => {
+  public destroy = () => {
     this.terminated = true;
   };
 }

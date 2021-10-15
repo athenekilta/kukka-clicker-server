@@ -5,15 +5,21 @@ import { ISocket } from "../interfaces/socket";
 import { logger } from "../utils/logger";
 import jwt from "jsonwebtoken";
 import config from "../utils/config";
+import { ClickerGame } from "../clicker-game/clickerGame";
 
 /**
  * Controller for live chat server instance
  */
 export class KukkaClickerController {
   io: Server<DefaultEventsMap, DefaultEventsMap>;
-  MESSAGE_EXPIRATION_SECONDS: number;
-  constructor(io: Server<DefaultEventsMap, DefaultEventsMap>) {
+  game: ClickerGame;
+
+  constructor(
+    io: Server<DefaultEventsMap, DefaultEventsMap>,
+    game: ClickerGame
+  ) {
     this.io = io;
+    this.game = game;
     this.__init();
   }
 
@@ -65,17 +71,28 @@ export class KukkaClickerController {
     const io = this.io;
     // main method
     io.on("connection", async (socket: ISocket) => {
-      // authenticate
+      // AUTHENTICATE
+
       const username = await controller.authenticate(socket);
       if (username) {
-        // join chat room
-        socket.on("join", async ({ room_id }) => {
-          // even unauthorized can join a room
-          socket.join(room_id);
+        // join game
+        controller.game.addUser(username);
+
+        // GAME
+
+        socket.on("click", async () => {
+          await controller.game.click(username);
         });
-        // emit connected event after authentication and initialization
-        socket.emit("connected");
       }
+
+      // CONNECTION
+
+      socket.on("disconnect", () => {
+        controller.game.deleteUser(username);
+      });
+
+      // emit connected event after authentication and initialization
+      socket.emit("connected");
     });
   }
 }

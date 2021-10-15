@@ -30,7 +30,7 @@ const game = new ClickerGame({ interval: 1000 });
 
 // controllers
 new AuthContorller(app);
-new KukkaClickerController(io);
+new KukkaClickerController(io, game);
 
 // start server
 server.listen(PORT, () => {
