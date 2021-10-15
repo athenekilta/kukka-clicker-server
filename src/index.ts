@@ -1,7 +1,9 @@
 import express from "express";
 import http from "http";
+import cors from "cors";
 import { Server } from "socket.io";
 import { ClickerGame } from "./clicker-game/clickerGame";
+import { UPGRADES } from "./clicker-game/constants";
 import { AuthContorller } from "./controllers/AuthController";
 import { KukkaClickerController } from "./controllers/KukkaClickerController";
 
@@ -19,6 +21,7 @@ const io = new Server(server, {
 const PORT = process.env.PORT || 4000;
 
 // middleware
+app.use(cors());
 app.use(express.json({ limit: "100mb" }));
 
 app.get("/", (req, res) => {
@@ -31,6 +34,11 @@ const game = new ClickerGame({ interval: 1000 });
 // controllers
 new AuthContorller(app);
 new KukkaClickerController(io, game);
+
+// get upgrades
+app.get("/api/upgrades", (req, res) => {
+  res.send(UPGRADES).status(200);
+});
 
 // start server
 server.listen(PORT, () => {
