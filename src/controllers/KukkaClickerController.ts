@@ -31,8 +31,6 @@ export class KukkaClickerController {
     try {
       // get token
       let accessToken = null;
-
-      console.log(socket.request.headers);
       if (
         socket.request.headers.authorization &&
         socket.request.headers.authorization.startsWith("Bearer ")
@@ -79,6 +77,7 @@ export class KukkaClickerController {
       const username = await controller.authenticate(socket);
       if (username) {
         // join game
+        socket.join(username);
         controller.game.addUser(username);
 
         // GAME

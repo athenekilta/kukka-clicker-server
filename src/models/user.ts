@@ -26,7 +26,7 @@ UserModel.init(
     },
     state: {
       type: DataTypes.STRING(100000),
-      defaultValue: '{ "upgrades": [] }',
+      defaultValue: '{ "score": 0, "upgrades": [] }',
     },
   },
   {
