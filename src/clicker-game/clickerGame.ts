@@ -144,7 +144,9 @@ export class ClickerGame {
   public upgrade = async (username: string, type: string) => {
     try {
       const user = await UserModel.findOne({ where: { username } });
-      const upgrade: IClickerGameUpgradeDefinition = UPGRADES[type];
+      const upgrade: IClickerGameUpgradeDefinition = UPGRADES.find(
+        (up) => up.type === type
+      );
       if (user && upgrade) {
         const newScore = user.score - upgrade.cost;
         const state: IClickerGameState = JSON.parse(user.state as string);
@@ -172,7 +174,7 @@ export class ClickerGame {
           }
           state.score = user.score; // ensure the right score
           await UserModel.update(
-            { state: state, score: newScore },
+            { state: JSON.stringify(state), score: newScore },
             { where: { username } }
           );
         }
