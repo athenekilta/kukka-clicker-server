@@ -26,8 +26,20 @@ export interface IClickerGameUpgradeDefinition {
 }
 
 export const UPGRADES: IClickerGameUpgradeDefinition[] = [
-  { cost: 5, type: "gardener", ratio: 1.2, score: 1, time_interval: 1000 },
-  { cost: 50, type: "kake", ratio: 1.2, score: 25, time_interval: 12000 },
+  {
+    cost: 5,
+    type: "gardener",
+    ratio: 1.2,
+    score: 1,
+    time_interval: 1000,
+  },
+  {
+    cost: 50,
+    type: "kake",
+    ratio: 1.2,
+    score: 25,
+    time_interval: 12000,
+  },
   {
     cost: 1000,
     type: "cs-building",
