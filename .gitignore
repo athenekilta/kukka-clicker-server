@@ -33,8 +33,7 @@ yarn-error.log*
 # other hidden files
 /config
 
-# static files that are tested
-/public/test
-
-/output
-/videos
+# sequelite
+/db
+/migrations
+/seeders
