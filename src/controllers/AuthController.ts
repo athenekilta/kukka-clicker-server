@@ -11,12 +11,25 @@ export class AuthContorller {
     this.bind(app);
   }
 
+  userPassRequirements(username, password, res) {
+    if (!(username.length > 0 && password.length > 5)) {
+      return res
+        .status(400)
+        .send({
+          user: null,
+          message: "Username must be at least one character and password must be at least 6 characters long",
+        })
+    }
+  }
+
   bind(app: Application) {
     // REGISTER
     app.post("/api/register", async (req, res) => {
       try {
         const username = req.body.username;
         const password = req.body.password;
+
+        this.userPassRequirements(username, password, res);
 
         const userExists = await UserModel.findOne({ where: { username } });
         if (userExists) {
@@ -63,6 +76,8 @@ export class AuthContorller {
       try {
         const username = req.body.username;
         const password = req.body.password;
+
+        this.userPassRequirements(username, password, res);
 
         const user = await UserModel.findOne({ where: { username } });
         if (!user) {
