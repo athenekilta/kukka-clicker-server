@@ -109,13 +109,14 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   {
     cost: 30000,
     type: "Kukkavallankumous",
-    description: "Eikö olisikin näppärää, jos presidentin tärkein tehtävä olisi turvata kasvua?",
+    description:
+      "Eikö olisikin näppärää, jos presidentin tärkein tehtävä olisi turvata kasvua?",
     ratio: 1.05,
     score: 200,
     time_interval: 8500,
   },
   {
-    cost: 1.0*Math.pow(10, 5),
+    cost: 1.0 * Math.pow(10, 5),
     type: "Kukkaplaneetta",
     description: "Koko planeetta tukee nyt kukkasi kasvua.",
     ratio: 1.05,
@@ -123,7 +124,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 9500,
   },
   {
-    cost: 1.0*Math.pow(10, 6),
+    cost: 1.0 * Math.pow(10, 6),
     type: "Aurinkokunta",
     description:
       "Kukka tarvitsee yhteyttääkseen Auringon koko säteilyenergian.",
@@ -132,7 +133,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 9800,
   },
   {
-    cost: 5*Math.pow(10, 6),
+    cost: 5 * Math.pow(10, 6),
     type: "Tähtiryhmä",
     description:
       "Pakollinen askel matkallasi maailmankaikkeuden upeinta kukkaistutusta.",
@@ -141,7 +142,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 9900,
   },
   {
-    cost: 7.5*Math.pow(10, 6),
+    cost: 7.5 * Math.pow(10, 6),
     type: "Jyri Possu Galactic Order and Plant Operations Management",
     description:
       "Boostaa galaksisi tuotantokapasiteettia palkkaamalla armeija Jyri Possuja.",
@@ -150,7 +151,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 200,
   },
   {
-    cost: 1.0*Math.pow(10, 7),
+    cost: 1.0 * Math.pow(10, 7),
     type: "Galaksiryhmien viljelyliittouma",
     description: "Monta galaksia on parempi kuin yksi galaksi.",
     ratio: 1.05,
@@ -158,7 +159,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 9000,
   },
   {
-    cost: 5*Math.pow(10, 8),
+    cost: 5 * Math.pow(10, 8),
     type: "Kukkauniversumi",
     description: "Jos avaruus on ääretön, mitä sen reunalta löytyy?",
     ratio: 1.1,
@@ -166,7 +167,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 10000,
   },
   {
-    cost: 10.0*Math.pow(10, 9),
+    cost: 10.0 * Math.pow(10, 9),
     type: "Alkuräjähdys 2.0",
     description: "Uskallatko?",
     ratio: 1.02,
@@ -174,67 +175,68 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 20000,
   },
   {
-    cost: 400.0*Math.pow(10, 9),
+    cost: 400.0 * Math.pow(10, 9),
     type: "Web 3.0",
     description: "Minä projektiryhmästä nuorin...",
     ratio: 1.2,
-    score: 3*Math.pow(10, 9),
+    score: 3 * Math.pow(10, 9),
     time_interval: 20000,
   },
   {
-    cost: 998.882*Math.pow(10, 9),
+    cost: 998.882 * Math.pow(10, 9),
     type: "4D-lasit",
     description: "Katso syvälle multiversumin sammakkoon.",
     ratio: 1.08,
-    score: 30*Math.pow(10, 9),
+    score: 30 * Math.pow(10, 9),
     time_interval: 9000,
   },
   {
-    cost: 8.2*Math.pow(10, 12),
+    cost: 8.2 * Math.pow(10, 12),
     type: "Industry 5.0",
     description: "6G-galaksit kiihdyttävät datan keruuta entisestään.",
     ratio: 1.2,
-    score: 300*Math.pow(10, 9),
+    score: 300 * Math.pow(10, 9),
     time_interval: 14000,
   },
   {
-    cost: 69*Math.pow(10, 12),
+    cost: 69 * Math.pow(10, 12),
     type: "HTML6",
     description: "Modernit ongelmat vaativat moderneja ratkaisuja.",
     ratio: 1.2,
-    score: 4.20*Math.pow(10, 12),
+    score: 4.2 * Math.pow(10, 12),
     time_interval: 15000,
   },
   {
-    cost: 2*Math.pow(10, 15),
+    cost: 2 * Math.pow(10, 15),
     type: "7-tahkoinen kuutio",
-    description: "Kasvata kukkaasi uusiin ulottuvuuksiin vaihtoehtoisen geometrian keinoin.",
+    description:
+      "Kasvata kukkaasi uusiin ulottuvuuksiin vaihtoehtoisen geometrian keinoin.",
     ratio: 1.2,
-    score: 290*Math.pow(10, 12),
+    score: 290 * Math.pow(10, 12),
     time_interval: 15000,
   },
   {
-    cost: 666*Math.pow(10, 15),
+    cost: 666 * Math.pow(10, 15),
     type: "Kahdeksas kuolemansynti",
     description: "Kasvua kyseenalaisin menetelmin.",
     ratio: 1.2,
-    score: 20*Math.pow(10, 15),
+    score: 20 * Math.pow(10, 15),
     time_interval: 18500,
   },
-    {
-    cost: 2*Math.pow(10, 21),
+  {
+    cost: 2 * Math.pow(10, 21),
     type: "Jyrki Porsas ja yhdeksän veljestä",
     description: "Jyri Possu tekee paluun Jyri Bossin muodossa.",
     ratio: 1.18,
-    score: 2.20*Math.pow(10, 18),
+    score: 2.2 * Math.pow(10, 18),
     time_interval: 17000,
   },
   {
-    cost: 1.23*Math.pow(10, 24),
+    cost: 1.23 * Math.pow(10, 24),
     type: "???",
     description: "????? ????? ????? ?????",
     ratio: 1.18,
-    score: 2.20*Math.pow(10, 18),
+    score: 2.2 * Math.pow(10, 18),
     time_interval: 17000,
   },
 ];
