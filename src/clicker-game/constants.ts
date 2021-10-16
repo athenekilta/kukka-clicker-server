@@ -135,7 +135,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     cost: 4*1000*Math.pow(10, 13),
     type: "Tähtiryhmä",
     description:
-      "Pakollinen askel matkallasi maailmankaikkeuden upeinta kukkaistutusta.",
+      "Pakollinen askel matkallasi kohti maailmankaikkeuden upeinta kukkaistutusta.",
     ratio: 1.05,
     score: 8*1000*Math.pow(10, 15),
     time_interval: 9900,
