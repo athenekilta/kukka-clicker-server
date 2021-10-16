@@ -45,18 +45,19 @@ export class ClickerGame {
    */
   private calculate = (state: IClickerGameState): IClickerGameState => {
     let score = state.score;
+    const upgrades = state.upgrades.map((upgrade) => {
+      const newTime = upgrade.previous_time + upgrade.time_interval;
+      if (newTime < Date.now()) {
+        // score
+        score += upgrade.score * Math.pow(upgrade.ratio, upgrade.level);
+        // update the upgrade
+        upgrade.previous_time = newTime;
+      }
+      return upgrade;
+    });
     return {
       score: Math.max(0, score), // over 0
-      upgrades: state.upgrades.map((upgrade) => {
-        const newTime = upgrade.previous_time + upgrade.time_interval;
-        if (newTime >= Date.now()) {
-          // score
-          score += upgrade.score * Math.pow(upgrade.ratio, upgrade.level);
-          // update the upgrade
-          upgrade.previous_time = newTime;
-        }
-        return upgrade;
-      }),
+      upgrades,
     };
   };
 
@@ -75,11 +76,22 @@ export class ClickerGame {
         if (user) {
           const prevState: IClickerGameState = JSON.parse(user.state as string);
           prevState.score = user.score; // ensure the right score
+
+          // calculate
           const newState = game.calculate(prevState);
           await UserModel.update(
             {
               state: JSON.stringify(newState),
-              score: newState.score,
+              // score: newState.score,
+            },
+            { where: { username } }
+          );
+
+          // increment
+          const diff = newState.score - prevState.score;
+          await UserModel.increment(
+            {
+              score: diff,
             },
             { where: { username } }
           );
@@ -169,7 +181,7 @@ export class ClickerGame {
               description: upgrade.description,
               score: upgrade.score,
               time_interval: upgrade.time_interval,
-              previous_time: 0,
+              previous_time: Date.now(),
               level: 1,
               ratio: upgrade.ratio,
             };
@@ -177,7 +189,11 @@ export class ClickerGame {
           }
           state.score = user.score; // ensure the right score
           await UserModel.update(
-            { state: JSON.stringify(state), score: newScore },
+            { state: JSON.stringify(state) },
+            { where: { username } }
+          );
+          await UserModel.increment(
+            { score: -actualCost },
             { where: { username } }
           );
         }
