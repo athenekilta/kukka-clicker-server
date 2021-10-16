@@ -96,15 +96,18 @@ export class ClickerGame {
 
     // update leaderboard
     if (this.io) {
-      // try {
-      //   const users = await UserModel.findAll({ order: ["score", "DESC"] });
-      //   this.io.emit(
-      //     "leaderboard",
-      //     users.map((u) => ({ username: u.username, score: u.score }))
-      //   );
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      try {
+        const users = await UserModel.findAll({
+          order: [["score", "DESC"]],
+          limit: 10,
+        });
+        this.io.emit(
+          "leaderboard",
+          users.map((u) => ({ username: u.username, score: u.score }))
+        );
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     const timeDiff = Date.now() - start;
