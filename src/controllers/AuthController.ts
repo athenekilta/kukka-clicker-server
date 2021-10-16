@@ -99,7 +99,7 @@ export class AuthContorller {
       } catch (error) {
         logger({ error });
       }
-      res.send({ message: "Internal server error" }).status(500);
+      res.status(500).send({ message: "Internal server error" });
     });
 
     app.get("/api/auth", async (req, res) => {
