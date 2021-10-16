@@ -153,7 +153,7 @@ export class ClickerGame {
 
   public click = async (username: string) => {
     try {
-      const clickScore = 1;
+      const clickScore = 0.001;
       await UserModel.increment({ score: clickScore }, { where: { username } });
     } catch (error) {
       logger({ error });
