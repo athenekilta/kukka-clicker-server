@@ -5,6 +5,11 @@ export interface IClickerGameUpgradeDefinition {
   type: string;
 
   /**
+   * Longer description of the upgrade
+   */
+  description: string;
+
+  /**
    * How much an upgrade imroves the initial score, should be over 1 but under 2
    */
   ratio: number;
@@ -28,30 +33,58 @@ export interface IClickerGameUpgradeDefinition {
 export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   {
     cost: 5,
-    type: "gardener",
+    type: "Puutarhuri",
+    description: "Puutarhuri rakastaa kukkaa puolestasi automaattisesti.",
     ratio: 1.2,
     score: 1,
     time_interval: 1000,
   },
   {
     cost: 50,
-    type: "kake",
+    type: "Kake",
+    description: "Yksi Kake vastaa kymmentä puutarhuria!",
     ratio: 1.2,
     score: 25,
     time_interval: 12000,
   },
   {
+    cost: 330,
+    type: "OLOhuone",
+    description: "Lahjo OTMK pitämään huolta kukasta",
+    ratio: 1.2,
+    score: 35,
+    time_interval: 12000,
+  },
+  {
     cost: 1000,
-    type: "cs-building",
+    type: "T-talon kurkkukasvimaa",
+    description: "Kun olkkari ei enää riitä, on laajennettava reviiriä.",
     ratio: 1.5,
     score: 50,
     time_interval: 10000,
   },
   {
     cost: 10000,
-    type: "factory",
+    type: "Kasvatuslaitos",
+    description: "Lannoitus, kastelu ja valaistus antavat kukkaselle optimaaliset kasvuolosuhteet.",
     ratio: 1.05,
     score: 1000,
-    time_interval: 500,
+    time_interval: 100000,
+  },
+  {
+    cost: 100000,
+    type: "Kukkaplaneetta",
+    description: "Koko planeetta tukee nyt kukkasi kasvua.",
+    ratio: 1.05,
+    score: 10000,
+    time_interval: 500000,
+  },
+  {
+    cost: 1000000,
+    type: "Aurinkokunta",
+    description: "Kukka tarvitsee yhteyttääkseen Auringon koko säteilyenergian.",
+    ratio: 1.05,
+    score: 100000,
+    time_interval: 800000,
   },
 ];
