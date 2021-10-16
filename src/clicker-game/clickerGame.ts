@@ -46,13 +46,18 @@ export class ClickerGame {
    */
   private calculate = (state: IClickerGameState): IClickerGameState => {
     let score = state.score;
+    const now = Date.now();
     const upgrades = state.upgrades.map((upgrade) => {
-      const newTime = upgrade.previous_time + upgrade.time_interval;
-      if (newTime < Date.now()) {
+      if (upgrade.previous_time + upgrade.time_interval < now) {
+        const howManyRewards = Math.floor(
+          (now - upgrade.previous_time) / upgrade.time_interval
+        );
+        const reward = upgrade.score * Math.pow(upgrade.ratio, upgrade.level);
         // score
-        score += upgrade.score * Math.pow(upgrade.ratio, upgrade.level);
+        score += howManyRewards * reward;
         // update the upgrade
-        upgrade.previous_time = newTime;
+        upgrade.previous_time =
+          upgrade.previous_time + howManyRewards * upgrade.time_interval;
       }
       return upgrade;
     });
