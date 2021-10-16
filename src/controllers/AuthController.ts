@@ -11,25 +11,23 @@ export class AuthContorller {
     this.bind(app);
   }
 
-  userPassRequirements(username, password, res) {
-    if (!(username.length > 0 && password.length > 5)) {
-      return res
-        .status(400)
-        .send({
-          user: null,
-          message: "Username must be at least one character and password must be at least 6 characters long",
-        })
-    }
-  }
-
   bind(app: Application) {
     // REGISTER
     app.post("/api/register", async (req, res) => {
+      console.log("register");
       try {
         const username = req.body.username;
         const password = req.body.password;
+        if (!(username.length > 0 && password.length > 5)) {
+          return res
+            .status(400)
+            .send({
+              user: null,
+              message: "Username must be at least one character and password must be at least 6 characters long",
+            })
+        }
 
-        this.userPassRequirements(username, password, res);
+        //this.userPassRequirements(username, password, res);
 
         const userExists = await UserModel.findOne({ where: { username } });
         if (userExists) {
@@ -68,16 +66,25 @@ export class AuthContorller {
       } catch (error) {
         logger({ error });
       }
-      res.status(500).send({ message: "Internal server error" });
+      return res.status(500).send({ message: "Internal server error" });
     });
 
     // LOGIN
     app.post("/api/login", async (req, res) => {
+      console.log("login");
       try {
         const username = req.body.username;
         const password = req.body.password;
+        if (!(username.length > 0 && password.length > 5)) {
+          return res
+            .status(400)
+            .send({
+              user: null,
+              message: "Username must be at least one character and password must be at least 6 characters long",
+            })
+        }
 
-        this.userPassRequirements(username, password, res);
+        //this.userPassRequirements(username, password, res);
 
         const user = await UserModel.findOne({ where: { username } });
         if (!user) {
@@ -114,10 +121,11 @@ export class AuthContorller {
       } catch (error) {
         logger({ error });
       }
-      res.status(500).send({ message: "Internal server error" });
+      // return res.status(500).send({ message: "Internal server error" });
     });
 
     app.get("/api/auth", async (req, res) => {
+      console.log("auth");
       try {
         // check if cookie is in cookies
         let accessToken: string;
