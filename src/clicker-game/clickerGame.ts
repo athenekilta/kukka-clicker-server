@@ -10,6 +10,7 @@ export interface IClickerGameOptions {
 
 export interface IClickerUpgrade {
   type: string;
+  description: string;
   level: number;
   ratio: number;
   score: number;
@@ -160,6 +161,7 @@ export class ClickerGame {
           } else {
             const newUpgrade: IClickerUpgrade = {
               type,
+              description: upgrade.description,
               score: upgrade.score,
               time_interval: upgrade.time_interval,
               previous_time: 0,
