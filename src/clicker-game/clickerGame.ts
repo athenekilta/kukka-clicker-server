@@ -111,7 +111,11 @@ export class ClickerGame {
         });
         this.io.emit(
           "leaderboard",
-          users.map((u) => ({ username: u.username, score: u.score }))
+          users.map((u) => ({
+            username: u.username,
+            level: u.level,
+            score: u.score,
+          }))
         );
       } catch (error) {
         console.log(error);
@@ -153,7 +157,8 @@ export class ClickerGame {
 
   public click = async (username: string) => {
     try {
-      const clickScore = 0.001;
+      const user = await UserModel.findOne({ where: { username } });
+      const clickScore = 0.001 * Math.pow(1.15, user.level);
       await UserModel.increment({ score: clickScore }, { where: { username } });
     } catch (error) {
       logger({ error });
@@ -193,6 +198,7 @@ export class ClickerGame {
           await UserModel.update(
             {
               state: JSON.stringify(state),
+              level: Sequelize.literal(`level + 1`),
               score: Sequelize.literal(`score - ${actualCost}`),
             },
             { where: { username } }

@@ -4,7 +4,6 @@ import { logger } from "../utils/logger";
 import config from "../utils/config";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { serialize } from "cookie";
 
 export class AuthContorller {
   constructor(app: Application) {
@@ -19,12 +18,11 @@ export class AuthContorller {
         const username = req.body.username;
         const password = req.body.password;
         if (!(username.length > 0 && password.length > 5)) {
-          return res
-            .status(400)
-            .send({
-              user: null,
-              message: "Username must be at least one character and password must be at least 6 characters long",
-            })
+          return res.status(400).send({
+            user: null,
+            message:
+              "Username must be at least one character and password must be at least 6 characters long",
+          });
         }
 
         //this.userPassRequirements(username, password, res);
@@ -76,12 +74,11 @@ export class AuthContorller {
         const username = req.body.username;
         const password = req.body.password;
         if (!(username.length > 0 && password.length > 5)) {
-          return res
-            .status(400)
-            .send({
-              user: null,
-              message: "Username must be at least one character and password must be at least 6 characters long",
-            })
+          return res.status(400).send({
+            user: null,
+            message:
+              "Username must be at least one character and password must be at least 6 characters long",
+          });
         }
 
         //this.userPassRequirements(username, password, res);
