@@ -85,6 +85,7 @@ export class ClickerGame {
             {
               state: JSON.stringify(newState),
               score: Sequelize.literal(`score + ${diff}`),
+              time_played: Sequelize.literal(`time_played + ${1}`),
             },
             { where: { username } }
           );

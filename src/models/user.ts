@@ -7,6 +7,7 @@ export class UserModel extends Model {
   public password: string;
   public score: number;
   public state: string | IClickerGameState;
+  public time_played: number;
 }
 
 UserModel.init(
@@ -27,6 +28,10 @@ UserModel.init(
     state: {
       type: DataTypes.STRING(100000),
       defaultValue: '{ "score": 0, "upgrades": [] }',
+    },
+    time_played: {
+      type: DataTypes.BIGINT,
+      defaultValue: 0,
     },
   },
   {
