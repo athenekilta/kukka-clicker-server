@@ -34,7 +34,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   {
     cost: 0.02,
     type: "Kastelu",
-    description: "Kasvit rakastavat vettä. Niin rakastat sinäkin. Muista juoda vettä.",
+    description:
+      "Kasvit rakastavat vettä. Niin rakastat sinäkin. Muista juoda vettä.",
     ratio: 1.2,
     score: 0.01,
     time_interval: 1000,
@@ -42,7 +43,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   {
     cost: 0.1,
     type: "Lannoitus",
-    description: "Pelkällä rakkaudella ja vedellä pääsee pitkälle, mutta jos suuri kasvu on tärkeää, klikkaa tästä.",
+    description:
+      "Pelkällä rakkaudella ja vedellä pääsee pitkälle, mutta jos suuri kasvu on tärkeää, klikkaa tästä.",
     ratio: 1.2,
     score: 0.05,
     time_interval: 1200,
@@ -98,7 +100,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   {
     cost: 10000,
     type: "Kasvatuslaitos",
-    description: "Lannoitus, kastelu ja valaistus antavat kukkaselle optimaaliset kasvuolosuhteet.",
+    description:
+      "Lannoitus, kastelu ja valaistus antavat kukkaselle optimaaliset kasvuolosuhteet.",
     ratio: 1.05,
     score: 200,
     time_interval: 8500,
@@ -114,7 +117,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   {
     cost: 1000000,
     type: "Aurinkokunta",
-    description: "Kukka tarvitsee yhteyttääkseen Auringon koko säteilyenergian.",
+    description:
+      "Kukka tarvitsee yhteyttääkseen Auringon koko säteilyenergian.",
     ratio: 1.05,
     score: 100000,
     time_interval: 9800,
@@ -122,7 +126,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   {
     cost: 5000000,
     type: "Tähtiryhmä",
-    description: "Pakollinen askel matkallasi maailmankaikkeuden upeinta kukkaistutusta.",
+    description:
+      "Pakollinen askel matkallasi maailmankaikkeuden upeinta kukkaistutusta.",
     ratio: 1.05,
     score: 800000,
     time_interval: 9900,
@@ -130,7 +135,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   {
     cost: 7500000,
     type: "Jyri Possu Galactic Order and Plant Operations Management",
-    description: "Boostaa galaksisi tuotantokapasiteettia palkkaamalla armeija Jyri Possuja.",
+    description:
+      "Boostaa galaksisi tuotantokapasiteettia palkkaamalla armeija Jyri Possuja.",
     ratio: 1.05,
     score: 500000,
     time_interval: 200,
@@ -147,7 +153,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     cost: 500000000,
     type: "Kukkauniversumi",
     description: "Jos avaruus on ääretön, mitä sen reunalta löytyy?",
-    ratio: 1.10,
+    ratio: 1.1,
     score: 10000000,
     time_interval: 10000,
   },

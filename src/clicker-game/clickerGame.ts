@@ -1,28 +1,13 @@
 import { Sequelize } from "sequelize";
 import { Server } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
-import { UserModel } from "../models/user";
+import { IClickerGameState, IClickerUpgrade, UserModel } from "../models/user";
 import { logger } from "../utils/logger";
 import { IClickerGameUpgradeDefinition, UPGRADES } from "./constants";
 
 export interface IClickerGameOptions {
   interval: number;
   acceptable_idle_time: number;
-}
-
-export interface IClickerUpgrade {
-  type: string;
-  description: string;
-  level: number;
-  ratio: number;
-  score: number;
-  time_interval: number;
-  previous_time: number;
-}
-
-export interface IClickerGameState {
-  score: number;
-  upgrades: IClickerUpgrade[];
 }
 
 export class ClickerGame {
@@ -49,16 +34,20 @@ export class ClickerGame {
     let score = state.score;
     const now = Date.now();
     const upgrades = state.upgrades.map((upgrade) => {
-      if (upgrade.previous_time + upgrade.time_interval < now) {
+      const upgradeDefinition = UPGRADES.find((up) => up.type === upgrade.type);
+      if (upgrade.previous_time + upgradeDefinition.time_interval < now) {
         const howManyRewards = Math.floor(
-          (now - upgrade.previous_time) / upgrade.time_interval
+          (now - upgrade.previous_time) / upgradeDefinition.time_interval
         );
-        const reward = upgrade.score * Math.pow(upgrade.ratio, upgrade.level);
+        const reward =
+          upgradeDefinition.score *
+          Math.pow(upgradeDefinition.ratio, upgrade.level);
         // score
         score += howManyRewards * reward;
         // update the upgrade
         upgrade.previous_time =
-          upgrade.previous_time + howManyRewards * upgrade.time_interval;
+          upgrade.previous_time +
+          howManyRewards * upgradeDefinition.time_interval;
       }
       return upgrade;
     });
@@ -195,12 +184,8 @@ export class ClickerGame {
           } else {
             const newUpgrade: IClickerUpgrade = {
               type,
-              description: upgrade.description,
-              score: upgrade.score,
-              time_interval: upgrade.time_interval,
               previous_time: Date.now(),
               level: 1,
-              ratio: upgrade.ratio,
             };
             state.upgrades.push(newUpgrade);
           }

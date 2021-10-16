@@ -1,7 +1,16 @@
 import { Model, DataTypes } from "sequelize";
-import { IClickerGameState } from "../clicker-game/clickerGame";
 import { sequelize } from "../utils/db";
 
+export interface IClickerUpgrade {
+  type: string;
+  level: number;
+  previous_time: number;
+}
+
+export interface IClickerGameState {
+  score: number;
+  upgrades: IClickerUpgrade[];
+}
 export class UserModel extends Model {
   public username: string;
   public password: string;
