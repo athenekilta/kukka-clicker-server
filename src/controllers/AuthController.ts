@@ -35,23 +35,23 @@ export class AuthContorller {
         const newUser = await UserModel.create(userData);
 
         const token = jwt.sign({ username }, config.ACCESS_TOKEN_SECRET_KEY, {
-          expiresIn: "2y",
+          expiresIn: "7d",
         });
 
-        const cookie = serialize(config.TOKEN_NAME, token, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 60 * 60 * 24 * 365 * 2, // 2 years
-          expires: new Date(1000 * 60 * 60 * 24 * 365 * 2),
-          sameSite: "strict",
-          path: "/",
-          // domain: process.env.BASE_URL,
-        });
-        res.setHeader("Set-Cookie", cookie);
+        // const cookie = serialize(config.TOKEN_NAME, token, {
+        //   httpOnly: true,
+        //   secure: true,
+        //   maxAge: 60 * 60 * 24 * 365 * 2, // 2 years
+        //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 2),
+        //   // sameSite: "strict",
+        //   path: "/",
+        //   // domain: process.env.BASE_URL,
+        // });
+        // res.setHeader("Set-Cookie", cookie);
 
         return res
           .status(201)
-          .send({ user: newUser.toJSON(), message: "success" });
+          .send({ user: newUser.toJSON(), token, message: "success" });
       } catch (error) {
         logger({ error });
       }
@@ -79,33 +79,33 @@ export class AuthContorller {
         }
 
         const token = jwt.sign({ username }, config.ACCESS_TOKEN_SECRET_KEY, {
-          expiresIn: "2y",
+          expiresIn: "7d",
         });
 
-        const cookie = serialize(config.TOKEN_NAME, token, {
-          httpOnly: true,
-          secure: true,
-          maxAge: 60 * 60 * 24 * 365 * 2, // 2 years
-          expires: new Date(1000 * 60 * 60 * 24 * 365 * 2),
-          sameSite: "strict",
-          path: "/",
-          // domain: process.env.BASE_URL,
-        });
-        res.setHeader("Set-Cookie", cookie);
+        // const cookie = serialize(config.TOKEN_NAME, token, {
+        //   httpOnly: true,
+        //   secure: true,
+        //   maxAge: 60 * 60 * 24 * 365 * 2, // 2 years
+        //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 2),
+        //   // sameSite: "strict",
+        //   path: "/",
+        //   // domain: process.env.BASE_URL,
+        // });
+        // res.setHeader("Set-Cookie", cookie);
 
         return res
           .status(200)
-          .send({ user: user.toJSON(), message: "success" });
+          .send({ user: user.toJSON(), token, message: "success" });
       } catch (error) {
         logger({ error });
       }
       res.send({ message: "Internal server error" }).status(500);
     });
 
-    app.post("/api/auth", async (req, res) => {
+    app.get("/api/auth", async (req, res) => {
       try {
         // check if cookie is in cookies
-        let accessToken: string = req.cookies[config.TOKEN_NAME];
+        let accessToken: string;
 
         // else try to get it form authorization
         if (!accessToken) {
@@ -148,20 +148,20 @@ export class AuthContorller {
               { username: decodedToken.username },
               config.ACCESS_TOKEN_SECRET_KEY,
               {
-                expiresIn: "2y",
+                expiresIn: "7d",
               }
             );
 
-            const cookie = serialize(config.TOKEN_NAME, token, {
-              httpOnly: true,
-              secure: true,
-              maxAge: 60 * 60 * 24 * 365 * 2, // 2 years
-              expires: new Date(1000 * 60 * 60 * 24 * 365 * 2),
-              sameSite: "strict",
-              path: "/",
-              // domain: process.env.BASE_URL,
-            });
-            res.setHeader("Set-Cookie", cookie);
+            // const cookie = serialize(config.TOKEN_NAME, token, {
+            //   httpOnly: true,
+            //   secure: true,
+            //   maxAge: 60 * 60 * 24 * 365 * 2, // 2 years
+            //   expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 365 * 2),
+            //   // // sameSite: "strict",
+            //   path: "/",
+            //   // domain: process.env.BASE_URL,
+            // });
+            // res.setHeader("Set-Cookie", cookie);
           }
 
           const user = await UserModel.findOne({ where: { username } });

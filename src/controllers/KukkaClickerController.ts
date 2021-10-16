@@ -31,6 +31,8 @@ export class KukkaClickerController {
     try {
       // get token
       let accessToken = null;
+
+      console.log(socket.request.headers);
       if (
         socket.request.headers.authorization &&
         socket.request.headers.authorization.startsWith("Bearer ")

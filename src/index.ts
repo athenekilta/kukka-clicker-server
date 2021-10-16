@@ -1,6 +1,7 @@
 import express from "express";
 import http from "http";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 import { ClickerGame } from "./clicker-game/clickerGame";
 import { UPGRADES } from "./clicker-game/constants";
@@ -22,6 +23,7 @@ const PORT = process.env.PORT || 4000;
 
 // middleware
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json({ limit: "100mb" }));
 
 app.get("/", (req, res) => {
