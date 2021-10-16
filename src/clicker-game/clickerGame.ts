@@ -1,3 +1,4 @@
+import { Sequelize } from "sequelize";
 import { Server } from "socket.io";
 import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { UserModel } from "../models/user";
@@ -79,19 +80,11 @@ export class ClickerGame {
 
           // calculate
           const newState = game.calculate(prevState);
+          const diff = newState.score - prevState.score;
           await UserModel.update(
             {
               state: JSON.stringify(newState),
-              // score: newState.score,
-            },
-            { where: { username } }
-          );
-
-          // increment
-          const diff = newState.score - prevState.score;
-          await UserModel.increment(
-            {
-              score: diff,
+              score: Sequelize.literal(`score + ${diff}`),
             },
             { where: { username } }
           );
@@ -189,11 +182,10 @@ export class ClickerGame {
           }
           state.score = user.score; // ensure the right score
           await UserModel.update(
-            { state: JSON.stringify(state) },
-            { where: { username } }
-          );
-          await UserModel.increment(
-            { score: -actualCost },
+            {
+              state: JSON.stringify(state),
+              score: Sequelize.literal(`score - ${actualCost}`),
+            },
             { where: { username } }
           );
         }
