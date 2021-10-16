@@ -7,6 +7,7 @@ import { IClickerGameUpgradeDefinition, UPGRADES } from "./constants";
 
 export interface IClickerGameOptions {
   interval: number;
+  acceptable_idle_time: number;
 }
 
 export interface IClickerUpgrade {
@@ -27,13 +28,13 @@ export interface IClickerGameState {
 export class ClickerGame {
   io: Server<DefaultEventsMap, DefaultEventsMap>;
   options: IClickerGameOptions;
-  activeUsers: string[];
+  activeTimes: { [key: string]: number };
   terminated: boolean;
 
   constructor(options: IClickerGameOptions) {
     this.io = null;
     this.options = options;
-    this.activeUsers = [];
+    this.activeTimes = {};
     this.terminated = false;
   }
 
@@ -77,32 +78,39 @@ export class ClickerGame {
 
     // calculate new states
     await Promise.all(
-      this.activeUsers.map(async (username) => {
-        const user = await UserModel.findOne({ where: { username } });
-        if (user) {
-          const prevState: IClickerGameState = JSON.parse(user.state as string);
-          prevState.score = user.score; // ensure the right score
+      Object.keys(this.activeTimes)
+        .filter((key) => {
+          const time = this.activeTimes[key];
+          return start - time < this.options.acceptable_idle_time;
+        })
+        .map(async (username) => {
+          const user = await UserModel.findOne({ where: { username } });
+          if (user) {
+            const prevState: IClickerGameState = JSON.parse(
+              user.state as string
+            );
+            prevState.score = user.score; // ensure the right score
 
-          // calculate
-          const newState = game.calculate(prevState);
-          const diff = newState.score - prevState.score;
-          await UserModel.update(
-            {
-              state: JSON.stringify(newState),
-              score: Sequelize.literal(`score + ${diff}`),
-              time_played: Sequelize.literal(`time_played + ${1}`),
-            },
-            { where: { username } }
-          );
+            // calculate
+            const newState = game.calculate(prevState);
+            const diff = newState.score - prevState.score;
+            await UserModel.update(
+              {
+                state: JSON.stringify(newState),
+                score: Sequelize.literal(`score + ${diff}`),
+                time_played: Sequelize.literal(`time_played + ${1}`),
+              },
+              { where: { username } }
+            );
 
-          // emit to user
-          if (this.io) {
-            this.io.to(username).emit("set_state", newState);
+            // emit to user
+            if (this.io) {
+              this.io.to(username).emit("set_state", newState);
+            }
+          } else {
+            // maybe delete user from the loop?
           }
-        } else {
-          // maybe delete user from the loop?
-        }
-      })
+        })
     );
 
     // update leaderboard
@@ -131,15 +139,26 @@ export class ClickerGame {
     }
   };
 
-  public addUser = (username: string) => {
-    if (!this.activeUsers.includes(username)) {
-      this.activeUsers.push(username);
-    }
+  public userHeartbeat = (username: string) => {
+    this.activeTimes[username] = Date.now();
   };
 
-  public deleteUser = (username: string) => {
-    if (this.activeUsers.includes(username)) {
-      this.activeUsers = this.activeUsers.filter((name) => name !== username);
+  public userJoin = async (username: string) => {
+    const user = await UserModel.findOne({ where: { username } });
+    if (user) {
+      const prevState: IClickerGameState = JSON.parse(user.state as string);
+      const now = Date.now();
+      const newUpgrades = prevState.upgrades.map((upgrade) => {
+        return { ...upgrade, previous_time: now };
+      });
+      const newState = { score: prevState.score, upgrades: newUpgrades };
+      await UserModel.update(
+        {
+          state: JSON.stringify(newState),
+        },
+        { where: { username } }
+      );
+      this.userHeartbeat(username);
     }
   };
 
@@ -162,7 +181,6 @@ export class ClickerGame {
         (up) => up.type === type
       );
       if (user && upgrade) {
-        const newScore = user.score - upgrade.cost;
         const state: IClickerGameState = JSON.parse(user.state as string);
         const existingUpgrade = state.upgrades.find((up) => up.type === type);
         // calculate the cost

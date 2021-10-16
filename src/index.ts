@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 // create clicker game
-const game = new ClickerGame({ interval: 1000 });
+const game = new ClickerGame({ interval: 1000, acceptable_idle_time: 10000 });
 
 // controllers
 new AuthContorller(app);

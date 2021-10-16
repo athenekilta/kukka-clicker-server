@@ -78,7 +78,7 @@ export class KukkaClickerController {
       if (username) {
         // join game
         socket.join(username);
-        controller.game.addUser(username);
+        controller.game.userJoin(username);
 
         // GAME
 
@@ -89,12 +89,16 @@ export class KukkaClickerController {
         socket.on("upgrade", async ({ type }) => {
           await controller.game.upgrade(username, type);
         });
+
+        socket.on("heartbeat", () => {
+          controller.game.userHeartbeat(username);
+        });
       }
 
       // CONNECTION
 
       socket.on("disconnect", () => {
-        controller.game.deleteUser(username);
+        console.log(username + " disconnected");
       });
 
       // emit connected event after authentication and initialization
