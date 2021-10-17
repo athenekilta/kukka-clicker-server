@@ -126,7 +126,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 4400,
   },
   {
-    cost: 150 * Math.pow(10, 6),
+    cost: 1.5 * Math.pow(10, 8),
     type: "Aurinkokunta",
     description:
       "Kukka tarvitsee yhteyttääkseen Auringon koko säteilyenergian.",
@@ -135,12 +135,12 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 9800,
   },
   {
-    cost: 4 * 1000 * Math.pow(10, 13),
+    cost: 4 * Math.pow(10, 16),
     type: "Tähtiryhmä",
     description:
       "Pakollinen askel matkallasi kohti maailmankaikkeuden upeinta kukkaistutusta.",
-    ratio: 1.8,
-    score: 8 * 1000 * Math.pow(10, 10),
+    ratio: 1.6,
+    score: 8.5 * Math.pow(10, 13),
     time_interval: 6000,
   },
   {
@@ -150,7 +150,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     description:
       "Boostaa galaksisi tuotantokapasiteettia palkkaamalla armeija Jyri Possuja.",
     ratio: 2.5,
-    score: 2.1 * 1000 * Math.pow(10, 15),
+    score: 2.1 * Math.pow(10, 16),
     time_interval: 4000,
   },
   {
