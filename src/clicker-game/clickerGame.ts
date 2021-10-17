@@ -158,7 +158,8 @@ export class ClickerGame {
   public click = async (username: string) => {
     try {
       const user = await UserModel.findOne({ where: { username } });
-      const clickScore = 0.001 * Math.pow(1.15, user.level);
+      const clickScore =
+        0.001 * (user.level + 1) + Math.pow(user.level, 3) / 100000;
       await UserModel.increment({ score: clickScore }, { where: { username } });
     } catch (error) {
       logger({ error });

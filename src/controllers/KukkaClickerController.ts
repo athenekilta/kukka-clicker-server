@@ -88,6 +88,7 @@ export class KukkaClickerController {
 
         socket.on("upgrade", async ({ type }) => {
           await controller.game.upgrade(username, type);
+          io.to(username).emit("upgraded");
         });
 
         socket.on("heartbeat", () => {
