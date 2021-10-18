@@ -181,7 +181,10 @@ export class ClickerGame {
         // calculate the cost
         let actualCost = upgrade.cost;
         if (existingUpgrade) {
-          actualCost = upgrade.cost * Math.pow(2, existingUpgrade.level);
+          actualCost = ClickerGame.costOfUpgrade(
+            upgrade.cost,
+            existingUpgrade.level
+          );
         }
         // if there is enough score?
         if (user.score >= actualCost) {
@@ -223,5 +226,11 @@ export class ClickerGame {
    */
   public destroy = () => {
     this.terminated = true;
+  };
+
+  // STATIC FUNCTIONS
+
+  static costOfUpgrade = (initialCost: number, level: number) => {
+    return level === 0 ? initialCost : initialCost * Math.pow(2, level);
   };
 }
