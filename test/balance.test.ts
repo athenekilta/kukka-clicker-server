@@ -3,7 +3,8 @@ import { UPGRADES } from "../src/clicker-game/constants";
 // balance constants
 const MIN_PROCEEDING_TIME_PER_LEVEL = 5 * 60; // 2min
 const MAX_PROCEEDING_TIME_PER_LEVEL = 6 * 60 * 60; // 6h
-// const COST_TO_REWARD_RATIO = 1 / 1000;
+const MAX_COST_TO_REWARD_RATIO = 1 / 50;
+const MIN_COST_TO_REWARD_RATIO = 1 / 1000;
 
 test("check balance", () => {
   const mapped = UPGRADES.map((upgrade, i) => {
@@ -19,9 +20,12 @@ test("check balance", () => {
       ((next.cost / MIN_PROCEEDING_TIME_PER_LEVEL) * upgrade.time_interval) /
       1000;
 
+    const cost_to_revard_ratio = upgrade.score / upgrade.cost;
+
     return {
       type: upgrade.type,
       proceeding_time,
+      cost_to_revard_ratio,
       min_acceptable_reward,
       max_acceptable_reward,
       acceptable:
@@ -29,6 +33,8 @@ test("check balance", () => {
         upgrade.score <= max_acceptable_reward,
     };
   });
+
+  console.log(mapped);
 
   expect(mapped.every((m) => m.acceptable));
 });

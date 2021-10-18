@@ -113,8 +113,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "Kukkavallankumous",
     description:
       "Eikö olisikin näppärää, jos presidentin tärkein tehtävä olisi turvata kasvua?",
-    ratio: 1.95,
-    score: 1200,
+    ratio: 1.4,
+    score: 500,
     time_interval: 3500,
   },
   {
@@ -130,8 +130,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "Aurinkokunta",
     description:
       "Kukka tarvitsee yhteyttääkseen Auringon koko säteilyenergian.",
-    ratio: 1.8,
-    score: 566893424036,
+    ratio: 1.2,
+    score: 5.5e8,
     time_interval: 9800,
   },
   {
@@ -145,13 +145,21 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
   },
   {
     cost: 1.2e18,
+    type: "Linnunradan kukankasvattajat ry",
+    description: "Järjestötoiminta kannattaa aina",
+    ratio: 1.6,
+    score: 1.26e16,
+    time_interval: 4000,
+  },
+  {
+    cost: 4.2e21,
     type:
       "Jyri Possu Galactic Order Enforcement and Plant Operations Management",
     description:
       "Boostaa galaksisi tuotantokapasiteettia palkkaamalla armeija Jyri Possuja.",
-    ratio: 1.6,
-    score: 1.26e18,
-    time_interval: 4000,
+    ratio: 1.7,
+    score: 1.26e19,
+    time_interval: 3200,
   },
   {
     cost: 9.46e23,
