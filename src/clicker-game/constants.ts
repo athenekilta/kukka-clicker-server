@@ -45,8 +45,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "Lannoitus",
     description:
       "Pelkällä rakkaudella ja vedellä pääsee pitkälle, mutta jos suuri kasvu on tärkeää, klikkaa tästä.",
-    ratio: 1.5,
-    score: 0.005,
+    ratio: 1.9,
+    score: 0.003,
     time_interval: 4000,
   },
   {
@@ -105,7 +105,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     description:
       "Lannoitus, kastelu ja valaistus antavat kukkaselle optimaaliset kasvuolosuhteet.",
     ratio: 1.5,
-    score: 1.5,
+    score: 10,
     time_interval: 4500,
   },
   {
@@ -113,8 +113,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "Kukkavallankumous",
     description:
       "Eikö olisikin näppärää, jos presidentin tärkein tehtävä olisi turvata kasvua?",
-    ratio: 1.4,
-    score: 500,
+    ratio: 1.6,
+    score: 1200,
     time_interval: 3500,
   },
   {
@@ -132,23 +132,41 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
       "Kukka tarvitsee yhteyttääkseen Auringon koko säteilyenergian.",
     ratio: 1.2,
     score: 5.5e8,
-    time_interval: 9800,
+    time_interval: 20000,
   },
   {
-    cost: 4 * Math.pow(10, 16),
+    cost: 2.4e11,
+    type: "Advanced mortar solar systems",
+    description:
+      "Suojele kukkaa avaruuden vaaroilta ja näytä siistiltä samalla",
+    ratio: 1.2,
+    score: 4.4e9,
+    time_interval: 2400,
+  },
+  {
+    cost: 1.0e13,
+    type: "Avaruuslannoitteen tuotantotehdas",
+    description:
+      "Avaruuden tarjoamat ravinteet tehostavat kukan selviytymistä Maan ulkopuolella",
+    ratio: 1.2,
+    score: 6.4e12,
+    time_interval: 2400,
+  },
+  {
+    cost: 4e16,
     type: "Tähtiryhmä",
     description:
       "Pakollinen askel matkallasi kohti maailmankaikkeuden upeinta kukkaistutusta.",
-    ratio: 1.6,
-    score: 2.5 * Math.pow(10, 14),
+    ratio: 1.4,
+    score: 2.5e15,
     time_interval: 6000,
   },
   {
     cost: 1.2e18,
     type: "Linnunradan kukankasvattajat ry",
     description: "Järjestötoiminta kannattaa aina",
-    ratio: 1.6,
-    score: 1.26e16,
+    ratio: 1.2,
+    score: 1.2e18,
     time_interval: 4000,
   },
   {
@@ -157,24 +175,41 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
       "Jyri Possu Galactic Order Enforcement and Plant Operations Management",
     description:
       "Boostaa galaksisi tuotantokapasiteettia palkkaamalla armeija Jyri Possuja.",
-    ratio: 1.7,
-    score: 1.26e19,
+    ratio: 1.2,
+    score: 1.4e21,
     time_interval: 3200,
   },
   {
     cost: 9.46e23,
     type: "Galaksiryhmien viljelyliittouma",
     description: "Monta galaksia on parempi kuin yksi galaksi.",
-    ratio: 2.1,
-    score: 7.82e22,
+    ratio: 1.4,
+    score: 7.82e23,
     time_interval: 9000,
+  },
+  {
+    cost: 5e26,
+    type: "Galaksiklusterien VC-rahasto",
+    description:
+      "Yhdistykset auttaa alkuun mutta, seed rundi auttaa kasvamaan.",
+    ratio: 1.6,
+    score: 9.26e25,
+    time_interval: 4000,
   },
   {
     cost: 5e28,
     type: "Kukkauniversumi",
     description: "Jos avaruus on ääretön, mitä sen reunalta löytyy?",
     ratio: 1.7,
-    score: 1.35e28,
+    score: 1.6e27,
+    time_interval: 10000,
+  },
+  {
+    cost: 5e28,
+    type: "Hellän dynaaminen kukkaiskokonaisuus olemus",
+    description: "Kukka on kaikki, kaikki on kukka.",
+    ratio: 1.7,
+    score: 2.32e29,
     time_interval: 10000,
   },
   {
@@ -190,7 +225,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "Web 3.0",
     description: "Minä projektiryhmästä wanhin...",
     ratio: 1.9,
-    score: 2.7746722222222222e31,
+    score: 5.24e32,
     time_interval: 20000,
   },
   {
@@ -198,7 +233,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "4D-lasit",
     description: "Katso syvälle multiversumin sammakkoon.",
     ratio: 1.6,
-    score: 1.0249999999999997e33,
+    score: 3.41e34,
     time_interval: 9000,
   },
   {
@@ -206,15 +241,15 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "Industry 5.0",
     description: "6G-galaksit kiihdyttävät datan keruuta entisestään.",
     ratio: 2.0,
-    score: 9.58e34,
+    score: 9.58e35,
     time_interval: 14000,
   },
   {
     cost: 6.9e38,
     type: "HTML6",
     description: "Modernit ongelmat vaativat moderneja ratkaisuja.",
-    ratio: 1.8,
-    score: 4.1666666666666666e35,
+    ratio: 1.4,
+    score: 1e38,
     time_interval: 15000,
   },
   {
