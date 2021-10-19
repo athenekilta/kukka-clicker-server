@@ -39,6 +39,8 @@ test("check balance", () => {
     }
   );
 
+  console.log(mapped);
+
   expect(mapped.every((m) => m.acceptable)).toBeTruthy();
 });
 

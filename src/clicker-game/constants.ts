@@ -96,8 +96,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "T-talon kurkkukasvimaa",
     description: "Kun olkkari ei enää riitä, on laajennettava reviiriä.",
     ratio: 1.8,
-    score: 0.5,
-    time_interval: 4500,
+    score: 0.25,
+    time_interval: 15000,
   },
   {
     cost: 400,
@@ -106,7 +106,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
       "Lannoitus, kastelu ja valaistus antavat kukkaselle optimaaliset kasvuolosuhteet.",
     ratio: 1.5,
     score: 10,
-    time_interval: 4500,
+    time_interval: 4000,
   },
   {
     cost: 1200,
@@ -114,8 +114,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     description:
       "Eikö olisikin näppärää, jos presidentin tärkein tehtävä olisi turvata kasvua?",
     ratio: 1.6,
-    score: 1200,
-    time_interval: 3500,
+    score: 400,
+    time_interval: 1000,
   },
   {
     cost: 6371000,
@@ -123,7 +123,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     description: "Koko planeetta tukee nyt kukkasi kasvua.",
     ratio: 1.8,
     score: 36000,
-    time_interval: 4400,
+    time_interval: 5000,
   },
   {
     cost: 1.5e8,
@@ -141,7 +141,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
       "Suojele kukkaa avaruuden vaaroilta ja näytä siistiltä samalla",
     ratio: 1.2,
     score: 4.4e9,
-    time_interval: 2400,
+    time_interval: 4000,
   },
   {
     cost: 1.0e13,
@@ -149,8 +149,8 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     description:
       "Avaruuden tarjoamat ravinteet tehostavat kukan selviytymistä Maan ulkopuolella",
     ratio: 1.2,
-    score: 6.4e12,
-    time_interval: 2400,
+    score: 5.9e14,
+    time_interval: 60000,
   },
   {
     cost: 4e16,
@@ -177,7 +177,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
       "Boostaa galaksisi tuotantokapasiteettia palkkaamalla armeija Jyri Possuja.",
     ratio: 1.2,
     score: 1.4e21,
-    time_interval: 3200,
+    time_interval: 2000,
   },
   {
     cost: 9.46e23,
@@ -188,29 +188,29 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     time_interval: 9000,
   },
   {
-    cost: 5e26,
+    cost: 5e25,
     type: "Galaksiklusterien VC-rahasto",
     description:
       "Yhdistykset auttaa alkuun mutta, seed rundi auttaa kasvamaan.",
     ratio: 1.6,
-    score: 9.26e25,
+    score: 9.26e24,
     time_interval: 4000,
   },
   {
-    cost: 5e28,
+    cost: 5e27,
     type: "Kukkauniversumi",
     description: "Jos avaruus on ääretön, mitä sen reunalta löytyy?",
     ratio: 1.7,
-    score: 1.6e27,
+    score: 1.1e27,
     time_interval: 10000,
   },
   {
-    cost: 5e28,
+    cost: 5e29,
     type: "Hellän dynaaminen kukkaiskokonaisuus olemus",
     description: "Kukka on kaikki, kaikki on kukka.",
     ratio: 1.7,
-    score: 2.32e29,
-    time_interval: 10000,
+    score: 4.63e28,
+    time_interval: 2000,
   },
   {
     cost: 1e32,
@@ -267,7 +267,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     description: "Kasvua kyseenalaisin menetelmin.",
     ratio: 1.98,
     score: 2e39,
-    time_interval: 18500,
+    time_interval: 18000,
   },
   {
     cost: 2e41,
