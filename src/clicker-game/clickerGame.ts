@@ -40,8 +40,9 @@ export class ClickerGame {
           (now - upgrade.previous_time) / upgradeDefinition.time_interval
         );
         const reward =
+          upgradeDefinition.score +
           upgradeDefinition.score *
-          Math.pow(upgradeDefinition.ratio, upgrade.level);
+            Math.pow(upgradeDefinition.ratio, upgrade.level - 1);
         // score
         score += howManyRewards * reward;
         // update the upgrade
