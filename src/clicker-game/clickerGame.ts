@@ -232,6 +232,6 @@ export class ClickerGame {
   // STATIC FUNCTIONS
 
   static costOfUpgrade = (initialCost: number, level: number) => {
-    return level === 0 ? initialCost : initialCost * Math.pow(2, level);
+    return level === 0 ? initialCost : initialCost * Math.pow(4.2, level);
   };
 }
