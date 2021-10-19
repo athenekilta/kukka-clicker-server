@@ -11,11 +11,13 @@ export interface IClickerGameState {
   score: number;
   upgrades: IClickerUpgrade[];
 }
+
 export class UserModel extends Model {
   public username: string;
   public password: string;
   public score: number;
   public level: number;
+  public clicks: number;
   public state: string | IClickerGameState;
   public time_played: number;
 }
@@ -41,9 +43,13 @@ UserModel.init(
     },
     state: {
       type: DataTypes.STRING(100000),
-      defaultValue: '{ "score": 0, "upgrades": [] }',
+      defaultValue: '{ "upgrades": [] }',
     },
     time_played: {
+      type: DataTypes.BIGINT,
+      defaultValue: 0,
+    },
+    clicks: {
       type: DataTypes.BIGINT,
       defaultValue: 0,
     },

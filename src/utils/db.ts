@@ -4,9 +4,8 @@ import { logger } from "./logger";
 export const sequelize = new Sequelize({
   dialect: "sqlite",
   logging: false,
-  storage: (process.env.NODE_ENV = "test"
-    ? "db/test.sqlite"
-    : "db/database.sqlite"),
+  storage:
+    process.env.NODE_ENV == "test" ? "db/test.sqlite" : "db/database.sqlite",
 });
 
 const connectDB = async () => {

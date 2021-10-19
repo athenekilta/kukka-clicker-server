@@ -28,12 +28,12 @@ export class ClickerGame {
   };
 
   /**
-   * Updates
+   * Updates in place and returns score addition
    */
-  private calculate = (state: IClickerGameState): IClickerGameState => {
-    let score = state.score;
+  private calculate = (state: IClickerGameState): number => {
+    let score = 0;
     const now = Date.now();
-    const upgrades = state.upgrades.map((upgrade) => {
+    state.upgrades.forEach((upgrade) => {
       const upgradeDefinition = UPGRADES.find((up) => up.type === upgrade.type);
       if (upgrade.previous_time + upgradeDefinition.time_interval < now) {
         const howManyRewards = Math.floor(
@@ -50,12 +50,8 @@ export class ClickerGame {
           upgrade.previous_time +
           howManyRewards * upgradeDefinition.time_interval;
       }
-      return upgrade;
     });
-    return {
-      score: Math.max(0, score), // over 0
-      upgrades,
-    };
+    return Math.max(0, score);
   };
 
   /**
@@ -66,58 +62,72 @@ export class ClickerGame {
     const game = this;
     const start = Date.now();
 
+    const activePlayers = Object.keys(this.activeTimes).filter((key) => {
+      const time = this.activeTimes[key];
+      return start - time < this.options.acceptable_idle_time;
+    });
+
+    const users = await UserModel.findAll({
+      where: { username: activePlayers },
+    });
+
     // calculate new states
     await Promise.all(
-      Object.keys(this.activeTimes)
-        .filter((key) => {
-          const time = this.activeTimes[key];
-          return start - time < this.options.acceptable_idle_time;
-        })
-        .map(async (username) => {
-          const user = await UserModel.findOne({ where: { username } });
-          if (user) {
-            const prevState: IClickerGameState = JSON.parse(
-              user.state as string
-            );
-            prevState.score = user.score; // ensure the right score
+      users?.map(async (user) => {
+        if (user) {
+          // calculate
+          const state: IClickerGameState = JSON.parse(user.state as string);
+          const addition = game.calculate(state);
+          await UserModel.update(
+            {
+              state: JSON.stringify(state),
+              score: Sequelize.literal(`score + ${addition}`),
+              time_played: Sequelize.literal(`time_played + ${1}`),
+            },
+            { where: { username: user.username } }
+          );
 
-            // calculate
-            const newState = game.calculate(prevState);
-            const diff = newState.score - prevState.score;
-            await UserModel.update(
-              {
-                state: JSON.stringify(newState),
-                score: Sequelize.literal(`score + ${diff}`),
-                time_played: Sequelize.literal(`time_played + ${1}`),
-              },
-              { where: { username } }
-            );
-
-            // emit to user
-            if (this.io) {
-              this.io.to(username).emit("set_state", newState);
-            }
-          } else {
-            // maybe delete user from the loop?
+          // emit to user
+          if (this.io) {
+            this.io.to(user.username).emit("set_state", {
+              ...state,
+              score: user.score + addition,
+              clicks: user.clicks,
+            });
           }
-        })
+        }
+      })
     );
 
     // update leaderboard
     if (this.io) {
       try {
-        const users = await UserModel.findAll({
+        const biggest = await UserModel.findAll({
           order: [["score", "DESC"]],
           limit: 10,
         });
-        this.io.emit(
-          "leaderboard",
-          users.map((u) => ({
+        const clicks = await UserModel.findAll({
+          order: [["clicks", "DESC"]],
+          limit: 10,
+        });
+        const level = await UserModel.findAll({
+          order: [["level", "DESC"]],
+          limit: 10,
+        });
+        this.io.emit("leaderboard", {
+          biggest: biggest.map((u) => ({
+            username: u.username,
+            score: u.score,
+          })),
+          clicks: clicks.map((u) => ({
+            username: u.username,
+            clicks: u.clicks,
+          })),
+          level: level.map((u) => ({
             username: u.username,
             level: u.level,
-            score: u.score,
-          }))
-        );
+          })),
+        });
       } catch (error) {
         console.log(error);
       }
@@ -161,7 +171,10 @@ export class ClickerGame {
       const user = await UserModel.findOne({ where: { username } });
       const clickScore =
         0.001 * (user.level + 1) + Math.pow(user.level, 3) / 100000;
-      await UserModel.increment({ score: clickScore }, { where: { username } });
+      await UserModel.increment(
+        { score: clickScore, clicks: 1 },
+        { where: { username } }
+      );
     } catch (error) {
       logger({ error });
     }
