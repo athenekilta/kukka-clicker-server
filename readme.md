@@ -7,6 +7,7 @@ Use node 14.
 ```zsh
 npm install
 npx sequelize-cli init
+npm install
 npm run dev
 ```
 If you get error "Please install sqlite3 package manually",

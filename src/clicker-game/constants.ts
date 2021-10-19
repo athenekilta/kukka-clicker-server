@@ -96,7 +96,7 @@ export const UPGRADES: IClickerGameUpgradeDefinition[] = [
     type: "T-talon kurkkukasvimaa",
     description: "Kun olkkari ei enää riitä, on laajennettava reviiriä.",
     ratio: 1.8,
-    score: 0.25,
+    score: 1.2,
     time_interval: 15000,
   },
   {

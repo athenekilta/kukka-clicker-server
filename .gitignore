@@ -36,4 +36,5 @@ yarn-error.log*
 # sequelite
 /db
 /migrations
+/models
 /seeders
