@@ -30,12 +30,26 @@ app.get("/", (req, res) => {
   res.send("Kukka server");
 });
 
+// define season
+const season_start = new Date(Date.now() + 1000 * 60 * 5);
+const season_end = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+
 // create clicker game
-const game = new ClickerGame({ interval: 1000, acceptable_idle_time: 10000 });
+const game = new ClickerGame({
+  interval: 1000,
+  acceptable_idle_time: 10000,
+  season_start,
+  season_end,
+});
 
 // controllers
 new AuthContorller(app);
 new KukkaClickerController(io, game);
+
+// get season
+app.get("/api/season", (req, res) => {
+  res.send({ season_start, season_end }).status(200);
+});
 
 // get upgrades
 app.get("/api/upgrades", (req, res) => {

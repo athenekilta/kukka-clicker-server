@@ -8,6 +8,8 @@ import { IClickerGameUpgradeDefinition, UPGRADES } from "./constants";
 export interface IClickerGameOptions {
   interval: number;
   acceptable_idle_time: number;
+  season_start: Date;
+  season_end: Date;
 }
 
 export class ClickerGame {
@@ -62,6 +64,9 @@ export class ClickerGame {
     const game = this;
     const start = Date.now();
 
+    // check season
+    const seasonIsOn = this.seasonIsOn();
+
     const activePlayers = Object.keys(this.activeTimes).filter((key) => {
       const time = this.activeTimes[key];
       return start - time < this.options.acceptable_idle_time;
@@ -75,25 +80,31 @@ export class ClickerGame {
     await Promise.all(
       users?.map(async (user) => {
         if (user) {
-          // calculate
+          const gameState = {
+            upgrades: null,
+            score: user.score,
+            clicks: user.clicks,
+          };
           const state: IClickerGameState = JSON.parse(user.state as string);
-          const addition = game.calculate(state);
-          await UserModel.update(
-            {
-              state: JSON.stringify(state),
-              score: Sequelize.literal(`score + ${addition}`),
-              time_played: Sequelize.literal(`time_played + ${1}`),
-            },
-            { where: { username: user.username } }
-          );
-
+          if (seasonIsOn) {
+            // calculate
+            const addition = game.calculate(state);
+            await UserModel.update(
+              {
+                state: JSON.stringify(state),
+                score: Sequelize.literal(`score + ${addition}`),
+                time_played: Sequelize.literal(`time_played + ${1}`),
+              },
+              { where: { username: user.username } }
+            );
+            gameState.upgrades = state.upgrades;
+            gameState.score += addition;
+          } else {
+            gameState.upgrades = state.upgrades;
+          }
           // emit to user
           if (this.io) {
-            this.io.to(user.username).emit("set_state", {
-              ...state,
-              score: user.score + addition,
-              clicks: user.clicks,
-            });
+            this.io.to(user.username).emit("set_state", gameState);
           }
         }
       })
@@ -143,6 +154,14 @@ export class ClickerGame {
     }
   };
 
+  public seasonIsOn = () => {
+    const now = Date.now();
+    return (
+      this.options.season_start.getTime() <= now &&
+      this.options.season_end.getTime() > now
+    );
+  };
+
   public userHeartbeat = (username: string) => {
     this.activeTimes[username] = Date.now();
   };
@@ -167,6 +186,10 @@ export class ClickerGame {
   };
 
   public click = async (username: string) => {
+    // check season
+    const seasonIsOn = this.seasonIsOn();
+    if (!seasonIsOn) return;
+
     try {
       const user = await UserModel.findOne({ where: { username } });
       const clickScore =
@@ -184,6 +207,10 @@ export class ClickerGame {
    * Upgrades one of users upgrades
    */
   public upgrade = async (username: string, type: string) => {
+    // check season
+    const seasonIsOn = this.seasonIsOn();
+    if (!seasonIsOn) return;
+
     try {
       const user = await UserModel.findOne({ where: { username } });
       const upgrade: IClickerGameUpgradeDefinition = UPGRADES.find(
