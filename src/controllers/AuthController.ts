@@ -185,16 +185,20 @@ export class AuthContorller {
           }
 
           const user = await UserModel.findOne({ where: { username } });
-          return res
-            .status(201)
-            .send({ user: user.toJSON(), message: "success" });
+          if (user) {
+            return res
+              .status(201)
+              .send({ user: user.toJSON(), message: "success" });
+          } else {
+            return res.status(200).send({ user: null });
+          }
         } else {
-          res.status(200).send({ user: null });
+          return res.status(200).send({ user: null });
         }
       } catch (error) {
         logger({ error });
       }
-      res.status(500).send({ message: "Internal server error" });
+      return res.status(500).send({ message: "Internal server error" });
     });
   }
 }
