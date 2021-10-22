@@ -25,6 +25,12 @@ export class AuthContorller {
           });
         }
 
+        if (username.length > 16)
+          return res.status(400).send({
+            user: null,
+            message: "Username cannot be longer than 16 characters",
+          });
+
         //this.userPassRequirements(username, password, res);
 
         const userExists = await UserModel.findOne({ where: { username } });
@@ -80,6 +86,12 @@ export class AuthContorller {
               "Username must be at least one character and password must be at least 6 characters long",
           });
         }
+
+        if (username.length > 16)
+          return res.status(400).send({
+            user: null,
+            message: "Username cannot be longer than 16 characters",
+          });
 
         //this.userPassRequirements(username, password, res);
 
