@@ -84,6 +84,7 @@ export class ClickerGame {
             upgrades: null,
             score: user.score,
             clicks: user.clicks,
+            level: user.level,
           };
           const state: IClickerGameState = JSON.parse(user.state as string);
           if (seasonIsOn) {
