@@ -274,4 +274,14 @@ export class ClickerGame {
   static costOfUpgrade = (initialCost: number, level: number) => {
     return level === 0 ? initialCost : initialCost * Math.pow(4.2, level);
   };
+
+  static clickScore = (level: number) => {
+    let score = 0;
+    if (level <= 116) {
+      score = 0.001 * (Math.pow(level, 2) + Math.pow(1.2, level));
+    } else {
+      score = Math.pow(level, 3);
+    }
+    return Math.min(Math.max(0, score), 1e20);
+  };
 }
