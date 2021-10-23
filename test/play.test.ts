@@ -50,7 +50,8 @@ test("play test – always buy an upgrade", () => {
         const howManyRewards = Math.floor(
           (time - upgrade.previous_time) / upgrade.time_interval
         );
-        const reward = upgrade.score * Math.pow(upgrade.ratio, upgrade.level);
+        const reward =
+          upgrade.score * Math.pow(upgrade.ratio, upgrade.level - 1);
         // score
         score += howManyRewards * reward;
         // update the upgrade

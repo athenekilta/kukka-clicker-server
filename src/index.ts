@@ -64,9 +64,9 @@ If you want to define season start and end manually, define the following enviro
 
     export KUKKACLICKER_SEASON_START="2021-10-22T18:30:00+03:00"
     export KUKKACLICKER_SEASON_END="2021-11-05T12:30:00+03:00"
-  `)
-  console.log(`Season start: ${season_start}`)
-  console.log(`Season end:   ${season_end}`)
+  `);
+  console.log(`Season start: ${season_start}`);
+  console.log(`Season end:   ${season_end}`);
   console.log(`Chat-server running on port ${PORT}`);
   game.start();
 });
